@@ -112,7 +112,7 @@
         <!-- Alerts -->
         <div v-if="alerts.length > 0" class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">{{ $t('dashboard.alerts') }}
+            <h2 class="text-lg font-medium text-gray-900">{{ $t('dashboard.alerts') }}</h2>
           </div>
           <div class="divide-y">
             <div 
