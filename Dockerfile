@@ -55,8 +55,8 @@ WORKDIR /var/www/html
 # Copy package files first
 COPY package*.json ./
 
-# Install Node.js dependencies
-RUN npm ci --only=production || npm install --production
+# Install Node.js dependencies (including dev dependencies for build)
+RUN npm ci || npm install
 
 # Copy all application code
 COPY . .
