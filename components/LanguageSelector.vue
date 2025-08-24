@@ -13,21 +13,19 @@
 </template>
 
 <script setup>
-const { locale, locales, setLocale } = useI18n()
+const { locale, setLocale } = useI18n()
 
 const selectedLocale = ref(locale.value)
 
-const localeOptions = computed(() => {
-  return locales.value.map(locale => ({
-    code: locale.code,
-    name: locale.name,
-    flag: locale.code === 'id' ? '🇮🇩' : '🇺🇸'
-  }))
-})
+const localeOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' }
+]
 
-const changeLanguage = async (newLocale) => {
+const changeLanguage = (newLocale) => {
   if (newLocale && newLocale !== locale.value) {
-    await setLocale(newLocale)
+    setLocale(newLocale)
+    selectedLocale.value = newLocale
     
     // Save preference to localStorage
     localStorage.setItem('preferred-locale', newLocale)
@@ -44,9 +42,5 @@ onMounted(() => {
     selectedLocale.value = savedLocale
     setLocale(savedLocale)
   }
-})
-
-watch(locale, (newLocale) => {
-  selectedLocale.value = newLocale
 })
 </script>

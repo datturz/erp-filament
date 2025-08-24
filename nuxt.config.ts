@@ -6,8 +6,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
-    '@nuxt/image',
-    '@nuxtjs/i18n'
+    '@nuxt/image'
   ],
 
   // PWA Configuration
@@ -76,20 +75,4 @@ export default defineNuxtConfig({
     strict: true
   },
 
-  // Internationalization
-  i18n: {
-    defaultLocale: 'en',
-    locales: [
-      { code: 'en', name: 'English', file: 'en.json' },
-      { code: 'id', name: 'Bahasa Indonesia', file: 'id.json' }
-    ],
-    lazy: true,
-    langDir: 'locales/',
-    strategy: 'no_prefix',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root'
-    }
-  }
 })
