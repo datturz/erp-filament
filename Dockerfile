@@ -17,20 +17,23 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     zip \
-    unzip
+    unzip \
+    icu-dev
 
 # Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install \
-    bcmath \
-    exif \
-    gd \
-    mysqli \
-    opcache \
-    pdo \
-    pdo_mysql \
-    pcntl \
-    zip
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install \
+        bcmath \
+        exif \
+        gd \
+        intl \
+        mysqli \
+        opcache \
+        pdo \
+        pdo_mysql \
+        pcntl \
+        zip
 
 # Install Redis extension with correct Alpine packages
 RUN apk add --no-cache --virtual .build-deps \
