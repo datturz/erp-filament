@@ -64,11 +64,11 @@ RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html/storage
 RUN chmod -R 755 /var/www/html/bootstrap/cache
 
-# Copy PHP configuration
-COPY php.ini /usr/local/etc/php/conf.d/
+# Copy PHP configuration (create if not exists)
+COPY php.ini* /usr/local/etc/php/conf.d/
 
-# Copy opcache configuration
-COPY opcache.ini /usr/local/etc/php/conf.d/
+# Copy opcache configuration (create if not exists)
+COPY opcache.ini* /usr/local/etc/php/conf.d/
 
 # Expose port
 EXPOSE 8000
