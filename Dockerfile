@@ -56,7 +56,7 @@ WORKDIR /var/www/html
 COPY package*.json ./
 
 # Install Node.js dependencies (including dev dependencies for build)
-RUN npm ci || npm install
+RUN rm -rf node_modules package-lock.json && npm install
 
 # Copy all application code
 COPY . .
