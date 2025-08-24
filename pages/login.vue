@@ -101,7 +101,7 @@ const handleLogin = async () => {
 
   try {
     await login(form)
-  } catch (err: any) {
+  } catch (err) {
     error.value = err.data?.message || $t('auth.login_failed')
   } finally {
     loading.value = false
