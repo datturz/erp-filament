@@ -1,0 +1,36 @@
+# Vercel
+.vercel
+.output
+
+# Nuxt
+.nuxt
+dist
+.nitro
+.cache
+
+# Node
+node_modules
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+!.env.vercel
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage
+.nyc_output
+
+# Build artifacts
+*.pid
+*.seed
+*.pid.lock

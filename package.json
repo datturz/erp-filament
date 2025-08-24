@@ -1,0 +1,33 @@
+{
+  "name": "pants-erp-mobile",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxt/ui": "^2.11.0",
+    "nuxt": "^3.8.0"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.16",
+    "@heroicons/vue": "^2.0.18",
+    "@nuxt/image": "^1.0.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@vite-pwa/nuxt": "^0.4.0",
+    "@vueuse/nuxt": "^10.5.0",
+    "@zxing/library": "^0.20.0",
+    "axios": "^1.6.0",
+    "@nuxtjs/i18n": "^8.0.0",
+    "pinia": "^2.1.7",
+    "quagga": "^0.12.1",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.2.2",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
+  }
+}

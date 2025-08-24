@@ -1,0 +1,95 @@
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  
+  modules: [
+    '@nuxt/ui',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@vite-pwa/nuxt',
+    '@nuxt/image',
+    '@nuxtjs/i18n'
+  ],
+
+  // PWA Configuration
+  pwa: {
+    registerType: 'autoUpdate',
+    workbox: {
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    client: {
+      installPrompt: true,
+    },
+    manifest: {
+      name: 'Pants ERP Mobile',
+      short_name: 'PantsERP',
+      description: 'Mobile interface for Pants Manufacturing ERP System',
+      theme_color: '#1f2937',
+      background_color: '#ffffff',
+      display: 'standalone',
+      orientation: 'portrait',
+      scope: '/',
+      start_url: '/',
+      icons: [
+        {
+          src: '/icon-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        }
+      ]
+    }
+  },
+
+  // Runtime config for API
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000/api/v1',
+      appName: process.env.NUXT_PUBLIC_APP_NAME || 'Pants ERP',
+      enableOffline: process.env.NUXT_PUBLIC_ENABLE_OFFLINE === 'true',
+      apiTimeout: parseInt(process.env.NUXT_PUBLIC_API_TIMEOUT || '30000')
+    }
+  },
+  
+  // Nitro config for Vercel
+  nitro: {
+    preset: 'vercel',
+    vercel: {
+      regions: ['sin1', 'hnd1', 'sfo1']
+    }
+  },
+
+  // CSS Framework
+  css: ['~/assets/css/main.css'],
+
+  // Auto-import
+  components: {
+    dirs: ['~/components']
+  },
+
+  // TypeScript
+  typescript: {
+    strict: true
+  },
+
+  // Internationalization
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'id', name: 'Bahasa Indonesia', file: 'id.json' }
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
+  }
+})
