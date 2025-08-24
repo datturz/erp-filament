@@ -54,12 +54,9 @@ export default defineNuxtConfig({
     }
   },
   
-  // Nitro config for Vercel
+  // Nitro config for Railway deployment
   nitro: {
-    preset: 'vercel',
-    vercel: {
-      regions: ['sin1', 'hnd1', 'sfo1']
-    }
+    preset: 'node-server'
   },
 
   // CSS Framework
