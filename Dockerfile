@@ -32,8 +32,11 @@ RUN docker-php-ext-install \
     pcntl \
     zip
 
-# Install Redis extension
-RUN pecl install redis && docker-php-ext-enable redis
+# Install Redis extension with dependencies
+RUN apk add --no-cache redis-dev \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del redis-dev
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
