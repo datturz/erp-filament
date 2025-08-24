@@ -42,17 +42,21 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy composer files
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock* ./
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Copy package files first
+COPY package*.json ./
+
+# Install Node.js dependencies
+RUN npm ci --only=production || npm install --production
+
 # Copy application code
 COPY . .
 
-# Install Node.js dependencies and build
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
+# Build the application
 RUN npm run build
 
 # Set permissions
