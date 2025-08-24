@@ -32,11 +32,16 @@ RUN docker-php-ext-install \
     pcntl \
     zip
 
-# Install Redis extension with dependencies
-RUN apk add --no-cache redis-dev \
+# Install Redis extension with correct Alpine packages
+RUN apk add --no-cache --virtual .build-deps \
+        autoconf \
+        gcc \
+        g++ \
+        make \
+        pkgconfig \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && apk del redis-dev
+    && apk del .build-deps
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
