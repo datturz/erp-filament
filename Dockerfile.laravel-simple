@@ -19,6 +19,9 @@ WORKDIR /var/www
 # Copy application
 COPY . .
 
+# Copy .env.railway as .env for production
+RUN if [ -f .env.railway ]; then cp .env.railway .env; fi
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
