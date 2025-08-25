@@ -1,9 +1,17 @@
 #!/bin/sh
 
-# Setup environment
+# Setup environment with variable substitution
 if [ ! -f .env ]; then
     if [ -f .env.railway ]; then
-        cp .env.railway .env
+        echo "Setting up environment variables..."
+        # Use envsubst to substitute environment variables
+        if command -v envsubst >/dev/null 2>&1; then
+            envsubst < .env.railway > .env
+        else
+            # Fallback: manual substitution for Railway variables
+            sed "s/\$MYSQLHOST/$MYSQLHOST/g; s/\$MYSQLPORT/$MYSQLPORT/g; s/\$MYSQLDATABASE/$MYSQLDATABASE/g; s/\$MYSQLUSER/$MYSQLUSER/g; s/\$MYSQLPASSWORD/$MYSQLPASSWORD/g" .env.railway > .env
+        fi
+        echo "Environment setup complete"
     fi
 fi
 
