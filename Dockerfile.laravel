@@ -50,11 +50,8 @@ COPY nginx-laravel.conf /etc/nginx/nginx.conf
 # Copy supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Set PORT environment variable with default
-ENV PORT=8080
+# Expose port (Railway uses PORT env var automatically)
+EXPOSE 8080
 
-# Expose port
-EXPOSE ${PORT}
-
-# Replace PORT in nginx config and start services
-CMD sh -c "envsubst '\$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf && mv /tmp/nginx.conf /etc/nginx/nginx.conf && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"
+# Start services
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
