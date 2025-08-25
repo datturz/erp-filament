@@ -56,7 +56,9 @@ export default defineNuxtConfig({
   
   // Nitro config for Railway deployment
   nitro: {
-    preset: 'node-server'
+    preset: 'node-server',
+    port: process.env.PORT || 3000,
+    host: '0.0.0.0'
   },
 
   // CSS Framework

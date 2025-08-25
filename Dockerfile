@@ -88,9 +88,12 @@ COPY opcache.ini* /usr/local/etc/php/conf.d/
 # Expose port for Nuxt
 EXPOSE 3000
 
-# Health check
+# Set default PORT if not provided
+ENV PORT=3000
+
+# Health check - use PORT environment variable
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:3000 || exit 1
+    CMD curl -f http://localhost:$PORT || exit 1
 
 # Start Nuxt server
 CMD ["npm", "run", "start"]
