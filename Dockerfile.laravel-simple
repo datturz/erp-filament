@@ -37,6 +37,12 @@ RUN mkdir -p storage/app/public \
 # Copy environment file if needed
 RUN if [ ! -f .env ]; then cp .env.railway .env; fi
 
+# Bootstrap Laravel after environment is ready
+RUN php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear \
+    && php artisan cache:clear
+
 # Use PORT from Railway
 ENV PORT=8080
 
