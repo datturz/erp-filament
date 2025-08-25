@@ -5,12 +5,6 @@
   "installCommand": "npm install",
   "devCommand": "npm run dev",
   "regions": ["sin1"],
-  "functions": {
-    "app/**/*.mjs": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   },

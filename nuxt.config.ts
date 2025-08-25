@@ -54,11 +54,9 @@ export default defineNuxtConfig({
     }
   },
   
-  // Nitro config for Railway deployment
+  // Nitro config for Vercel deployment
   nitro: {
-    preset: 'node-server',
-    port: process.env.PORT || 3000,
-    host: '0.0.0.0'
+    preset: 'vercel'
   },
 
   // CSS Framework
