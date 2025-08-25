@@ -50,8 +50,12 @@ COPY nginx-laravel.conf /etc/nginx/nginx.conf
 # Copy supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose port (Railway uses PORT env var automatically)
+# Copy start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Railway sets PORT dynamically
 EXPOSE 8080
 
-# Start services
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Start services with dynamic port
+CMD ["/start.sh"]
