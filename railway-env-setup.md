@@ -8,9 +8,9 @@ These are automatically available when you add MySQL service:
 - `MYSQLUSER` → root  
 - `MYSQLPASSWORD` → Auto-generated password
 
-## 🔧 Laravel Variables to Set in Railway
+## 🔧 Laravel Variables to Set in Railway Dashboard
 
-Copy these to Railway Laravel service environment variables:
+**IMPORTANT**: Set these directly in Railway dashboard environment variables:
 
 ```
 APP_NAME=Pants ERP System
@@ -34,10 +34,10 @@ FILAMENT_PATH=admin
 
 ## 📝 Important Notes
 
-1. Use `${{VARIABLE}}` syntax in Railway for referencing MySQL service variables
-2. Don't use quotes around variable references
-3. APP_URL should be your actual Railway domain
-4. Database will auto-connect if variables are properly referenced
+1. **NO .env file needed** - Railway provides environment variables directly
+2. Use `${{VARIABLE}}` syntax in Railway for referencing MySQL service variables
+3. Variables are automatically available to Laravel via `env()` function
+4. Database will auto-connect if variables are properly set in Railway dashboard
 
 ## 🧪 Test Database Connection
 
