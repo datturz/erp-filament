@@ -34,17 +34,12 @@ RUN mkdir -p storage/app/public \
     bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
-# Copy environment file if needed
-RUN if [ ! -f .env ]; then cp .env.railway .env; fi
-
-# Bootstrap Laravel after environment is ready
-RUN php artisan config:clear \
-    && php artisan route:clear \
-    && php artisan view:clear \
-    && php artisan cache:clear
+# Copy startup script
+COPY start-laravel.sh /start-laravel.sh
+RUN chmod +x /start-laravel.sh
 
 # Use PORT from Railway
 ENV PORT=8080
 
-# Start PHP built-in server with error logging
-CMD php -S 0.0.0.0:${PORT} -t public 2>&1
+# Start with custom script
+CMD ["/start-laravel.sh"]
