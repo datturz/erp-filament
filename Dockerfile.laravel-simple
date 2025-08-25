@@ -34,11 +34,8 @@ RUN mkdir -p storage/app/public \
     bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
-# Generate app key if not exists and run Laravel setup
-RUN if [ ! -f .env ]; then cp .env.railway .env; fi \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+# Copy environment file if needed
+RUN if [ ! -f .env ]; then cp .env.railway .env; fi
 
 # Use PORT from Railway
 ENV PORT=8080
