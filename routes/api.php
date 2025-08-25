@@ -10,6 +10,11 @@ use App\Http\Controllers\Api\V1\MobileController;
 |--------------------------------------------------------------------------
 */
 
+// Health check endpoint (no auth required)
+Route::get('/health', function () {
+    return response()->json(['status' => 'healthy'], 200);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
