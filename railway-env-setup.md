@@ -12,6 +12,9 @@ These are automatically available when you add MySQL service:
 
 **IMPORTANT**: Set these directly in Railway dashboard environment variables:
 
+**CRITICAL**: Use consistent variable syntax - either all `${{ServiceName.VAR}}` OR all `${{VAR}}`
+
+**Option 1: Service-Scoped Variables (Recommended)**
 ```
 APP_NAME=Pants ERP System
 APP_ENV=production
@@ -30,6 +33,15 @@ CACHE_DRIVER=file
 SESSION_DRIVER=file
 QUEUE_CONNECTION=sync
 FILAMENT_PATH=admin
+```
+
+**Option 2: Legacy Variables (if service connection provides them)**
+```
+DB_HOST=${{MYSQLHOST}}
+DB_PORT=${{MYSQLPORT}}
+DB_DATABASE=${{MYSQL_DATABASE}}
+DB_USERNAME=${{MYSQLUSER}}
+DB_PASSWORD=${{MYSQLPASSWORD}}
 ```
 
 ## 🚨 CRITICAL: MySQL Service Setup Required
