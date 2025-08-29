@@ -1,6 +1,6 @@
 FROM php:8.3-cli-alpine
 
-# Install dependencies
+# Install system dependencies and PHP extensions in one layer
 RUN apk add --no-cache \
     libpng-dev \
     libzip-dev \
@@ -9,38 +9,56 @@ RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     gettext \
+    unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring zip intl gd
+    && docker-php-ext-install pdo_mysql mbstring zip intl gd \
+    && docker-php-ext-enable opcache
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# Copy application
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist --no-autoloader
+
+# Copy application files
 COPY . .
 
-# Copy .env.railway as .env for production
-RUN if [ -f .env.railway ]; then cp .env.railway .env; fi
+# Copy Railway environment file
+RUN if [ -f .env.railway ]; then cp .env.railway .env; else echo "Warning: .env.railway not found"; fi
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Complete composer installation with autoloader
+RUN composer dump-autoload --optimize --no-dev
 
-# Create storage directories
+# Create required directories and set permissions
 RUN mkdir -p storage/app/public \
-    storage/framework/cache \
+    storage/framework/cache/data \
     storage/framework/sessions \
     storage/framework/views \
     storage/logs \
     bootstrap/cache \
-    && chmod -R 777 storage bootstrap/cache
+    && chmod -R 775 storage bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
 
-# Copy startup script
+# Copy and make startup script executable
 COPY start-laravel.sh /start-laravel.sh
 RUN chmod +x /start-laravel.sh
 
-# Use PORT from Railway
-ENV PORT=8080
+# Configure PHP for production
+COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY php.ini /usr/local/etc/php/conf.d/custom.ini
 
-# Start with custom script
+# Use Railway PORT environment variable
+ENV PORT=8080
+ENV APP_ENV=production
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD php -r "echo json_encode(['status' => 'ok', 'timestamp' => date('c')]);" || exit 1
+
+# Start application
 CMD ["/start-laravel.sh"]
