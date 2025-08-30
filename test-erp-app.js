@@ -23,12 +23,12 @@ async function testERPApp() {
     
     // Test 3: Test each menu item
     const menuItems = [
-      { name: 'POS Terminal', url: '/pos', selector: 'text=POS Terminal' },
-      { name: 'Sales History', url: '/sales-history', selector: 'text=Sales History' },
-      { name: 'Stock Management', url: '/stock-management', selector: 'text=Stock Management' },
-      { name: 'Products', url: '/products', selector: 'text=Products' },
-      { name: 'Categories', url: '/categories', selector: 'text=Categories' },
-      { name: 'Sales Report', url: '/sales-report', selector: 'text=Sales Report' }
+      { name: 'POS Terminal', url: '/pos', selector: 'a[href="/pos"]' },
+      { name: 'Sales History', url: '/sales-history', selector: 'a[href="/sales-history"]' },
+      { name: 'Stock Management', url: '/stock-management', selector: 'a[href="/stock-management"]' },
+      { name: 'Products', url: '/products', selector: 'a[href="/products"]' },
+      { name: 'Categories', url: '/categories', selector: 'a[href="/categories"]' },
+      { name: 'Sales Report', url: '/sales-report', selector: 'a[href="/sales-report"]' }
     ];
     
     console.log('\n3. Testing Menu Navigation...');
