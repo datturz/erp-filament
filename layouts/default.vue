@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
     <!-- Sidebar -->
     <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
       <!-- Logo -->
@@ -44,7 +44,7 @@
             </svg>
             POS Terminal
           </NuxtLink>
-          <NuxtLink to="/sales" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/sales-history" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
             </svg>
@@ -61,7 +61,7 @@
         <!-- Inventory -->
         <div class="mb-4">
           <h3 class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase">Inventory</h3>
-          <NuxtLink to="/inventory" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/stock-management" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
             </svg>
@@ -90,13 +90,13 @@
         <!-- Warehouse -->
         <div class="mb-4">
           <h3 class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase">Warehouse</h3>
-          <NuxtLink to="/incoming" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/incoming-goods" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
             Incoming Goods
           </NuxtLink>
-          <NuxtLink to="/outgoing" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/outgoing-goods" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
             </svg>
@@ -154,13 +154,13 @@
         <!-- Reports -->
         <div class="mb-4">
           <h3 class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase">Reports</h3>
-          <NuxtLink to="/reports/sales" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/sales-report" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
             </svg>
             Sales Report
           </NuxtLink>
-          <NuxtLink to="/reports/inventory" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/stock-report" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
             </svg>
