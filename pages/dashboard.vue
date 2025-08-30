@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
     <!-- Sidebar -->
     <div class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
       <!-- Logo -->
-      <div class="h-16 px-4 bg-gray-800 flex items-center justify-between">
+      <div class="h-16 px-6 bg-gray-800 flex items-center justify-between">
         <span class="text-white font-bold text-xl">PANTS ERP</span>
         <button @click="sidebarOpen = false" class="lg:hidden text-gray-400">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,17 +14,16 @@
 
       <!-- Store Selector -->
       <div class="px-4 py-3 border-b border-gray-800">
-        <select v-model="selectedStore" class="w-full px-3 py-2 bg-gray-800 text-white rounded border border-gray-700">
+        <select v-model="selectedStore" class="w-full bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:border-blue-500 focus:outline-none">
           <option value="all">All Stores</option>
-          <option value="store1">Store Jakarta</option>
-          <option value="store2">Store Bandung</option>
-          <option value="store3">Store Surabaya</option>
-          <option value="warehouse">Main Warehouse</option>
+          <option value="main">Main Store</option>
+          <option value="branch1">Branch 1</option>
+          <option value="branch2">Branch 2</option>
         </select>
       </div>
 
       <!-- Navigation Menu -->
-      <nav class="mt-4 px-4 overflow-y-auto" style="max-height: calc(100vh - 8rem)">
+      <nav class="mt-4 px-4 overflow-y-auto" style="max-height: calc(100vh - 12rem)">
         <!-- Dashboard -->
         <NuxtLink to="/dashboard" class="flex items-center px-3 py-2 mb-1 text-white bg-gray-800 rounded">
           <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,16 +34,16 @@
 
         <!-- POS Section -->
         <div class="mb-4 mt-4">
-          <h3 class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase">Point of Sale</h3>
-          <NuxtLink to="/pos" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <p class="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Point of Sale</p>
+          <NuxtLink to="/pos" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white transition-colors">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
             POS Terminal
           </NuxtLink>
-          <NuxtLink to="/sales" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white">
+          <NuxtLink to="/sales-history" class="flex items-center px-3 py-2 mb-1 text-gray-300 rounded hover:bg-gray-800 hover:text-white transition-colors">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             Sales History
           </NuxtLink>
