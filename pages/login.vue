@@ -76,7 +76,7 @@ definePageMeta({
 })
 
 const { login } = useAuth()
-const { $t } = useI18n()
+// const { $t } = useI18n() // Disabled for now
 
 const form = reactive({
   email: '',

@@ -27,10 +27,15 @@ export const useAuth = () => {
         body: credentials
       })
       
-      token.value = data.token
-      user.value = data.user
-      
-      await navigateTo('/dashboard')
+      if (data.success) {
+        token.value = data.token
+        user.value = data.user
+        
+        // Force navigation to dashboard
+        window.location.href = '/dashboard'
+      } else {
+        throw new Error('Login failed')
+      }
     } catch (error) {
       throw error
     }

@@ -4,11 +4,11 @@
     <header class="bg-white shadow-sm">
       <div class="flex items-center justify-between px-4 py-3">
         <div>
-          <h1 class="text-xl font-semibold text-gray-900">{{ $t('dashboard.title') }}</h1>
+          <h1 class="text-xl font-semibold text-gray-900">Dashboard</h1>
           <p class="text-sm text-gray-500">{{ user?.store || 'System' }}</p>
         </div>
         <div class="flex items-center space-x-3">
-          <LanguageSelector />
+          <!-- Language selector disabled for now -->
           <UButton variant="ghost" size="sm" @click="refreshData">
             <UIcon name="i-heroicons-arrow-path" :class="{ 'animate-spin': loading }" />
           </UButton>
@@ -44,17 +44,17 @@
         <!-- POS Section -->
         <div v-if="canAccessPOS()" class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">{{ $t('pos.title') }}</h2>
+            <h2 class="text-lg font-medium text-gray-900">Point of Sale</h2>
           </div>
           <div class="p-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <UButton size="lg" block @click="navigateTo('/pos')">
                 <UIcon name="i-heroicons-credit-card" class="mr-2" />
-                {{ $t('dashboard.start_new_sale') }}
+                Start New Sale
               </UButton>
               <UButton variant="outline" size="lg" block @click="navigateTo('/sales')">
                 <UIcon name="i-heroicons-chart-bar" class="mr-2" />
-                {{ $t('dashboard.view_sales') }}
+                View Sales
               </UButton>
             </div>
           </div>
@@ -63,25 +63,25 @@
         <!-- Warehouse Section -->
         <div v-if="canAccessWarehouse()" class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">{{ $t('dashboard.warehouse_operations') }}</h2>
+            <h2 class="text-lg font-medium text-gray-900">Warehouse Operations</h2>
           </div>
           <div class="p-4">
             <div class="grid grid-cols-2 gap-4">
               <UButton variant="outline" size="lg" block @click="navigateTo('/inventory')">
                 <UIcon name="i-heroicons-cube" class="mr-2" />
-                {{ $t('nav.inventory') }}
+                Inventory
               </UButton>
               <UButton variant="outline" size="lg" block @click="navigateTo('/batches')">
                 <UIcon name="i-heroicons-cog" class="mr-2" />
-                {{ $t('nav.production') }}
+                Production
               </UButton>
               <UButton variant="outline" size="lg" block @click="navigateTo('/transfers')">
                 <UIcon name="i-heroicons-arrow-path" class="mr-2" />
-                {{ $t('nav.transfers') }}
+                Transfers
               </UButton>
               <UButton variant="outline" size="lg" block @click="navigateTo('/cycle-count')">
                 <UIcon name="i-heroicons-clipboard-document-list" class="mr-2" />
-                {{ $t('warehouse.cycle_count') }}
+                Cycle Count
               </UButton>
             </div>
           </div>
@@ -90,7 +90,7 @@
         <!-- Recent Activity -->
         <div class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">{{ $t('dashboard.recent_activity') }}</h2>
+            <h2 class="text-lg font-medium text-gray-900">Recent Activity</h2>
           </div>
           <div class="divide-y">
             <div 
@@ -112,7 +112,7 @@
         <!-- Alerts -->
         <div v-if="alerts.length > 0" class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">{{ $t('dashboard.alerts') }}</h2>
+            <h2 class="text-lg font-medium text-gray-900">Alerts</h2>
           </div>
           <div class="divide-y">
             <div 
