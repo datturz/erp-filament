@@ -5,16 +5,15 @@
       <div class="flex items-center justify-between px-4 py-3">
         <div>
           <h1 class="text-xl font-semibold text-gray-900">Dashboard</h1>
-          <p class="text-sm text-gray-500">{{ user?.store || 'System' }}</p>
+          <p class="text-sm text-gray-500">{{ userEmail || 'Welcome' }}</p>
         </div>
         <div class="flex items-center space-x-3">
-          <!-- Language selector disabled for now -->
-          <UButton variant="ghost" size="sm" @click="refreshData">
-            <UIcon name="i-heroicons-arrow-path" :class="{ 'animate-spin': loading }" />
-          </UButton>
-          <UButton variant="ghost" size="sm" @click="logout">
-            <UIcon name="i-heroicons-arrow-right-on-rectangle" />
-          </UButton>
+          <button 
+            @click="handleLogout"
+            class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 border rounded"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </header>
@@ -22,67 +21,185 @@
     <!-- Quick Stats -->
     <div class="p-4">
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div 
-          v-for="stat in stats" 
-          :key="stat.label"
-          class="bg-white p-4 rounded-lg shadow-sm"
-        >
+        <div class="bg-white p-4 rounded-lg shadow-sm">
           <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <UIcon :name="stat.icon" class="h-6 w-6 text-blue-600" />
+            <div class="p-2 bg-blue-100 rounded">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
             </div>
             <div class="ml-3">
-              <p class="text-sm text-gray-500">{{ stat.label }}</p>
-              <p class="text-lg font-semibold text-gray-900">{{ stat.value }}</p>
+              <p class="text-sm text-gray-500">Total Sales</p>
+              <p class="text-lg font-semibold">$12,450</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex items-center">
+            <div class="p-2 bg-green-100 rounded">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-gray-500">Inventory</p>
+              <p class="text-lg font-semibold">2,345</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex items-center">
+            <div class="p-2 bg-yellow-100 rounded">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-gray-500">Production</p>
+              <p class="text-lg font-semibold">145</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex items-center">
+            <div class="p-2 bg-purple-100 rounded">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-gray-500">Staff</p>
+              <p class="text-lg font-semibold">24</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Role-based sections -->
+      <!-- Main Menu Sections -->
       <div class="space-y-6">
         <!-- POS Section -->
-        <div v-if="canAccessPOS()" class="bg-white rounded-lg shadow-sm">
+        <div class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
             <h2 class="text-lg font-medium text-gray-900">Point of Sale</h2>
           </div>
           <div class="p-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <UButton size="lg" block @click="navigateTo('/pos')">
-                <UIcon name="i-heroicons-credit-card" class="mr-2" />
+              <NuxtLink 
+                to="/pos"
+                class="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                </svg>
                 Start New Sale
-              </UButton>
-              <UButton variant="outline" size="lg" block @click="navigateTo('/sales')">
-                <UIcon name="i-heroicons-chart-bar" class="mr-2" />
-                View Sales
-              </UButton>
+              </NuxtLink>
+              <NuxtLink 
+                to="/sales"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                View Sales Report
+              </NuxtLink>
             </div>
           </div>
         </div>
 
         <!-- Warehouse Section -->
-        <div v-if="canAccessWarehouse()" class="bg-white rounded-lg shadow-sm">
+        <div class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
             <h2 class="text-lg font-medium text-gray-900">Warehouse Operations</h2>
           </div>
           <div class="p-4">
             <div class="grid grid-cols-2 gap-4">
-              <UButton variant="outline" size="lg" block @click="navigateTo('/inventory')">
-                <UIcon name="i-heroicons-cube" class="mr-2" />
+              <NuxtLink 
+                to="/inventory"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                </svg>
                 Inventory
-              </UButton>
-              <UButton variant="outline" size="lg" block @click="navigateTo('/batches')">
-                <UIcon name="i-heroicons-cog" class="mr-2" />
+              </NuxtLink>
+              <NuxtLink 
+                to="/batches"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
                 Production
-              </UButton>
-              <UButton variant="outline" size="lg" block @click="navigateTo('/transfers')">
-                <UIcon name="i-heroicons-arrow-path" class="mr-2" />
+              </NuxtLink>
+              <NuxtLink 
+                to="/transfers"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
                 Transfers
-              </UButton>
-              <UButton variant="outline" size="lg" block @click="navigateTo('/cycle-count')">
-                <UIcon name="i-heroicons-clipboard-document-list" class="mr-2" />
+              </NuxtLink>
+              <NuxtLink 
+                to="/cycle-count"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
                 Cycle Count
-              </UButton>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="bg-white rounded-lg shadow-sm">
+          <div class="px-4 py-3 border-b">
+            <h2 class="text-lg font-medium text-gray-900">Reports & Analytics</h2>
+          </div>
+          <div class="p-4">
+            <div class="grid grid-cols-2 gap-4">
+              <NuxtLink 
+                to="/reports/sales"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Sales Analytics
+              </NuxtLink>
+              <NuxtLink 
+                to="/reports/inventory"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                </svg>
+                Inventory Report
+              </NuxtLink>
+              <NuxtLink 
+                to="/reports/production"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a3 3 0 003 3h0a3 3 0 003-3v-1m3-10V4a1 1 0 00-1-1h-1M8 4H7a1 1 0 00-1 1v3m8 0V4M8 8h8m-4-4v8"></path>
+                </svg>
+                Production Report
+              </NuxtLink>
+              <NuxtLink 
+                to="/reports/financial"
+                class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded hover:bg-gray-50"
+              >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Financial Report
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -93,39 +210,63 @@
             <h2 class="text-lg font-medium text-gray-900">Recent Activity</h2>
           </div>
           <div class="divide-y">
-            <div 
-              v-for="activity in recentActivity" 
-              :key="activity.id"
-              class="px-4 py-3 flex items-center space-x-3"
-            >
+            <div class="px-4 py-3 flex items-center space-x-3">
               <div class="flex-shrink-0">
-                <div class="w-2 h-2 rounded-full" :class="getActivityColor(activity.type)"></div>
+                <div class="w-2 h-2 bg-green-400 rounded-full"></div>
               </div>
-              <div class="flex-1 min-w-0">
-                <p class="text-sm text-gray-900">{{ activity.description }}</p>
-                <p class="text-xs text-gray-500">{{ formatTime(activity.timestamp) }}</p>
+              <div class="flex-1">
+                <p class="text-sm">Sale completed - Order #1234</p>
+                <p class="text-xs text-gray-500">2 minutes ago</p>
+              </div>
+            </div>
+            <div class="px-4 py-3 flex items-center space-x-3">
+              <div class="flex-shrink-0">
+                <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm">Inventory transfer initiated - TRF-456</p>
+                <p class="text-xs text-gray-500">15 minutes ago</p>
+              </div>
+            </div>
+            <div class="px-4 py-3 flex items-center space-x-3">
+              <div class="flex-shrink-0">
+                <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm">Production batch started - BATCH-789</p>
+                <p class="text-xs text-gray-500">1 hour ago</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Alerts -->
-        <div v-if="alerts.length > 0" class="bg-white rounded-lg shadow-sm">
+        <div class="bg-white rounded-lg shadow-sm">
           <div class="px-4 py-3 border-b">
-            <h2 class="text-lg font-medium text-gray-900">Alerts</h2>
+            <h2 class="text-lg font-medium text-gray-900">System Alerts</h2>
           </div>
-          <div class="divide-y">
-            <div 
-              v-for="alert in alerts" 
-              :key="alert.id"
-              class="px-4 py-3"
-            >
-              <UAlert 
-                :title="alert.title"
-                :description="alert.message"
-                :color="alert.type === 'warning' ? 'orange' : 'red'"
-                variant="soft"
-              />
+          <div class="p-4 space-y-3">
+            <div class="bg-yellow-50 border border-yellow-200 rounded p-3">
+              <div class="flex">
+                <svg class="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <div>
+                  <p class="text-sm font-medium text-yellow-800">Low Stock Alert</p>
+                  <p class="text-xs text-yellow-600 mt-1">Product SKU-123 is running low (5 units remaining)</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 rounded p-3">
+              <div class="flex">
+                <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                  <p class="text-sm font-medium text-blue-800">System Update</p>
+                  <p class="text-xs text-blue-600 mt-1">New features available in POS module</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -135,86 +276,37 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: 'auth'
-})
+import { ref, onMounted } from 'vue'
 
-const { user, logout, canAccessPOS, canAccessWarehouse } = useAuth()
-const { getDashboard } = useAPI()
-
-const loading = ref(false)
-const dashboardData = ref({
-  stats: {},
-  alerts: [],
-  recent_activity: []
-})
-
-const { t } = useI18n()
-
-const stats = computed(() => [
-  {
-    label: t('dashboard.today_sales'),
-    value: formatCurrency(dashboardData.value.stats?.today_sales || 0),
-    icon: 'i-heroicons-currency-dollar'
-  },
-  {
-    label: t('dashboard.transactions'),
-    value: dashboardData.value.stats?.today_transactions || 0,
-    icon: 'i-heroicons-shopping-cart'
-  },
-  {
-    label: t('dashboard.low_stock'),
-    value: dashboardData.value.stats?.low_stock_items || 0,
-    icon: 'i-heroicons-exclamation-triangle'
-  },
-  {
-    label: t('dashboard.active_batches'),
-    value: dashboardData.value.stats?.active_batches || 0,
-    icon: 'i-heroicons-cog'
-  }
-])
-
-const alerts = computed(() => dashboardData.value.alerts || [])
-const recentActivity = computed(() => dashboardData.value.recent_activity || [])
-
-const loadDashboard = async () => {
-  loading.value = true
-  try {
-    const data = await getDashboard()
-    dashboardData.value = data
-  } catch (error) {
-    console.error('Failed to load dashboard:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-const refreshData = () => {
-  loadDashboard()
-}
-
-const getActivityColor = (type) => {
-  switch (type) {
-    case 'sale': return 'bg-green-500'
-    case 'transfer': return 'bg-blue-500'
-    case 'production': return 'bg-purple-500'
-    case 'adjustment': return 'bg-yellow-500'
-    default: return 'bg-gray-500'
-  }
-}
-
-const formatTime = (timestamp) => {
-  return new Date(timestamp).toLocaleTimeString()
-}
-
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(amount)
-}
+// Get user email from cookie or localStorage
+const userEmail = ref('')
 
 onMounted(() => {
-  loadDashboard()
+  // Try to get user info from cookie or localStorage
+  if (typeof window !== 'undefined') {
+    const authToken = document.cookie.split('; ').find(row => row.startsWith('auth-token='))
+    if (authToken) {
+      // Decode token to get email (simple base64 decode)
+      try {
+        const token = authToken.split('=')[1]
+        const decoded = atob(token)
+        const email = decoded.split(':')[0]
+        userEmail.value = email
+      } catch (e) {
+        console.error('Error decoding token:', e)
+      }
+    }
+  }
 })
+
+const handleLogout = () => {
+  // Clear auth cookie
+  document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  // Redirect to login
+  window.location.href = '/login'
+}
 </script>
+
+<style scoped>
+/* Add any custom styles here */
+</style>
