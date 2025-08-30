@@ -15,6 +15,17 @@ Route::get('/health', function () {
     return response()->json(['status' => 'healthy'], 200);
 });
 
+// Test endpoint for Vercel connection (no auth required)
+Route::get('/v1/test', function () {
+    return response()->json([
+        'status' => 'success',
+        'message' => 'API connection successful',
+        'timestamp' => now()->toDateTimeString(),
+        'server' => 'Railway Laravel API',
+        'version' => 'v1'
+    ]);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
