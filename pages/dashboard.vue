@@ -1,26 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div class="flex items-center justify-between px-4 py-3">
-        <div>
-          <h1 class="text-xl font-semibold text-gray-900">Dashboard</h1>
-          <p class="text-sm text-gray-500">{{ userEmail || 'Welcome' }}</p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <button 
-            @click="handleLogout"
-            class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 border rounded"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
-    </header>
+  <div class="p-6">
+
+    <!-- Page Title -->
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+      <p class="text-gray-600">Welcome to PANTS ERP System</p>
+    </div>
 
     <!-- Quick Stats -->
-    <div class="p-4">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-white p-4 rounded-lg shadow-sm">
           <div class="flex items-center">
             <div class="p-2 bg-blue-100 rounded">
@@ -276,35 +264,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-
-// Get user email from cookie or localStorage
-const userEmail = ref('')
-
-onMounted(() => {
-  // Try to get user info from cookie or localStorage
-  if (typeof window !== 'undefined') {
-    const authToken = document.cookie.split('; ').find(row => row.startsWith('auth-token='))
-    if (authToken) {
-      // Decode token to get email (simple base64 decode)
-      try {
-        const token = authToken.split('=')[1]
-        const decoded = atob(token)
-        const email = decoded.split(':')[0]
-        userEmail.value = email
-      } catch (e) {
-        console.error('Error decoding token:', e)
-      }
-    }
-  }
+definePageMeta({
+  layout: 'default',
+  middleware: 'auth'
 })
-
-const handleLogout = () => {
-  // Clear auth cookie
-  document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-  // Redirect to login
-  window.location.href = '/login'
-}
 </script>
 
 <style scoped>
