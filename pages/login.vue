@@ -7,23 +7,20 @@
         </svg>
       </div>
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        {{ $t('auth.login') }}
+        Login
       </h2>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <div class="mb-4 flex justify-center">
-          <LanguageSelector />
-        </div>
         
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div>
-            <UFormGroup :label="$t('auth.email')" name="email" required>
+            <UFormGroup label="Email" name="email" required>
               <UInput 
                 v-model="form.email" 
                 type="email" 
-                :placeholder="$t('auth.email')"
+                placeholder="Enter your email"
                 :disabled="loading"
                 size="lg"
               />
@@ -31,11 +28,11 @@
           </div>
 
           <div>
-            <UFormGroup :label="$t('auth.password')" name="password" required>
+            <UFormGroup label="Password" name="password" required>
               <UInput 
                 v-model="form.password" 
                 type="password" 
-                :placeholder="$t('auth.password')"
+                placeholder="Enter your password"
                 :disabled="loading"
                 size="lg"
               />
@@ -43,7 +40,7 @@
           </div>
 
           <div class="flex items-center justify-between">
-            <UCheckbox v-model="rememberMe" :label="$t('auth.remember_me')" />
+            <UCheckbox v-model="rememberMe" label="Remember me" />
           </div>
 
           <div>
@@ -53,7 +50,7 @@
               block 
               size="lg"
             >
-              {{ $t('auth.login') }}
+              Login
             </UButton>
           </div>
         </form>
@@ -92,7 +89,7 @@ const error = ref(null)
 
 const handleLogin = async () => {
   if (!form.email || !form.password) {
-    error.value = $t('auth.fill_all_fields')
+    error.value = 'Please fill all fields'
     return
   }
 
@@ -102,7 +99,7 @@ const handleLogin = async () => {
   try {
     await login(form)
   } catch (err) {
-    error.value = err.data?.message || $t('auth.login_failed')
+    error.value = err.data?.message || 'Login failed'
   } finally {
     loading.value = false
   }
