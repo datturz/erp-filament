@@ -22,12 +22,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Parse request path
 $requestPath = $_SERVER['REQUEST_URI'] ?? '/';
 $requestPath = parse_url($requestPath, PHP_URL_PATH);
+// Remove /api.php prefix if exists
 $requestPath = str_replace('/api.php', '', $requestPath);
+// Also handle /api prefix
+$requestPath = str_replace('/api', '', $requestPath);
+
+// Debug: Log the request path
+error_log("Request path: " . $requestPath);
 
 // Route to endpoints
 switch ($requestPath) {
     case '/v1/auth/login':
-    case '/api/v1/auth/login':
+    case '/auth/login':
+    case '//v1/auth/login': // Handle double slash
         // Forward to login handler
         require __DIR__ . '/api/v1/auth/login.php';
         exit;

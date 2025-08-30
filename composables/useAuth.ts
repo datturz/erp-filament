@@ -20,8 +20,9 @@ export const useAuth = () => {
   
   const login = async (credentials: LoginCredentials) => {
     try {
-      const { data } = await $fetch<{ user: User, token: string }>('/auth/login', {
-        baseURL: config.public.apiBase,
+      // Use direct URL for login
+      const apiUrl = 'https://jubilant-prosperity-production.up.railway.app/login-test.php'
+      const data = await $fetch<{ user: User, token: string, success: boolean }>(apiUrl, {
         method: 'POST',
         body: credentials
       })
