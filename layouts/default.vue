@@ -227,7 +227,7 @@
             </button>
             
             <!-- User Menu -->
-            <div class="relative">
+            <div class="relative user-menu-container">
               <button @click="userMenuOpen = !userMenuOpen" class="flex items-center text-sm rounded-full focus:outline-none">
                 <div class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center">
                   <span class="text-white font-medium">{{ userInitial }}</span>
@@ -238,7 +238,7 @@
                 </svg>
               </button>
               
-              <div v-if="userMenuOpen" @click.away="userMenuOpen = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+              <div v-if="userMenuOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                 <NuxtLink to="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</NuxtLink>
                 <NuxtLink to="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</NuxtLink>
                 <hr class="my-1">
@@ -260,7 +260,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const sidebarOpen = ref(false)
 const userMenuOpen = ref(false)
@@ -270,6 +270,14 @@ const userEmail = ref('')
 const userInitial = computed(() => {
   return userEmail.value ? userEmail.value[0].toUpperCase() : 'U'
 })
+
+// Handle click outside to close menu
+const handleClickOutside = (event) => {
+  const userMenuEl = document.querySelector('.user-menu-container')
+  if (userMenuEl && !userMenuEl.contains(event.target)) {
+    userMenuOpen.value = false
+  }
+}
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
@@ -284,6 +292,15 @@ onMounted(() => {
         console.error('Error decoding token:', e)
       }
     }
+    
+    // Add click outside listener
+    document.addEventListener('click', handleClickOutside)
+  }
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    document.removeEventListener('click', handleClickOutside)
   }
 })
 
