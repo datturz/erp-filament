@@ -1,19 +1,19 @@
 <?php
 
 return [
-    'driver' => env('SESSION_DRIVER', 'file'),
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'driver' => 'file', // Force file driver, ignore env
+    'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
     'files' => storage_path('framework/sessions'),
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => null,
     'table' => 'sessions',
-    'store' => env('SESSION_STORE'),
+    'store' => null,
     'lottery' => [2, 100],
-    'cookie' => env('SESSION_COOKIE', 'laravel_session'),
+    'cookie' => 'laravel_session',
     'path' => '/',
-    'domain' => env('SESSION_DOMAIN'),
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'domain' => null,
+    'secure' => false, // Set to true in production with HTTPS
     'http_only' => true,
     'same_site' => 'lax',
 ];
