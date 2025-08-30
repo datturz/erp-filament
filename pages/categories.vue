@@ -142,7 +142,7 @@ const formData = ref({
 // Fetch categories from API
 const fetchCategories = async () => {
   try {
-    const response = await fetch('/api/v1/categories.php')
+    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api.php/v1/categories')
     const data = await response.json()
     if (data.success) {
       categories.value = data.data
@@ -180,7 +180,7 @@ const saveCategory = async () => {
   try {
     if (showEditModal.value) {
       // Update category
-      const response = await fetch(`/api/v1/categories.php/${formData.value.id}`, {
+      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api.php/v1/categories/${formData.value.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -192,7 +192,7 @@ const saveCategory = async () => {
       }
     } else {
       // Create new category
-      const response = await fetch('/api/v1/categories.php', {
+      const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api.php/v1/categories', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -220,7 +220,7 @@ const saveCategory = async () => {
 const deleteCategory = async (id) => {
   if (confirm('Are you sure you want to delete this category?')) {
     try {
-      const response = await fetch(`/api/v1/categories.php/${id}`, {
+      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api.php/v1/categories/${id}`, {
         method: 'DELETE'
       })
       const data = await response.json()
