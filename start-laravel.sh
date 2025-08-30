@@ -13,6 +13,15 @@ if [ -z "$APP_KEY" ]; then
     echo "Generated APP_KEY: ${APP_KEY:0:20}..."
 fi
 
+# Ensure storage directories exist and are writable
+mkdir -p storage/app/public \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/testing \
+    storage/logs \
+    bootstrap/cache
+
 # Ensure Laravel can write to storage
 chmod -R 777 storage bootstrap/cache
 

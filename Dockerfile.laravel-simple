@@ -39,10 +39,10 @@ RUN mkdir -p storage/app/public \
     storage/framework/cache/data \
     storage/framework/sessions \
     storage/framework/views \
+    storage/framework/testing \
     storage/logs \
     bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chmod -R 777 storage bootstrap/cache
 
 # Copy and make startup script executable
 COPY start-laravel.sh /start-laravel.sh
