@@ -23,6 +23,11 @@ return [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data'),
         ],
+        
+        'redis' => [
+            'driver' => 'file', // Use file driver as fallback for redis
+            'path' => storage_path('framework/cache/redis'),
+        ],
     ],
 
     /*

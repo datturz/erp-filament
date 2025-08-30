@@ -16,6 +16,7 @@ fi
 # Ensure storage directories exist and are writable
 mkdir -p storage/app/public \
     storage/framework/cache/data \
+    storage/framework/cache/redis \
     storage/framework/sessions \
     storage/framework/views \
     storage/framework/testing \
