@@ -57,7 +57,7 @@ export default defineNuxtConfig({
   
   // Nitro config for Vercel deployment
   nitro: {
-    preset: 'vercel'
+    preset: 'vercel-edge'
   },
 
   // CSS Framework
