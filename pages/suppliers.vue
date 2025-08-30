@@ -179,7 +179,7 @@ const formData = ref({
 // Fetch suppliers from API
 const fetchSuppliers = async () => {
   try {
-    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/suppliers.php')
+    const response = await fetch('/api/v1/suppliers.php')
     const data = await response.json()
     if (data.success) {
       suppliers.value = data.data
@@ -235,7 +235,7 @@ const saveSupplier = async () => {
   try {
     if (showEditModal.value) {
       // Update supplier
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/suppliers.php/${formData.value.id}`, {
+      const response = await fetch(`/api/v1/suppliers.php/${formData.value.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -247,7 +247,7 @@ const saveSupplier = async () => {
       }
     } else {
       // Create new supplier
-      const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/suppliers.php', {
+      const response = await fetch('/api/v1/suppliers.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -275,7 +275,7 @@ const saveSupplier = async () => {
 const deleteSupplier = async (id) => {
   if (confirm('Are you sure you want to delete this supplier?')) {
     try {
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/suppliers.php/${id}`, {
+      const response = await fetch(`/api/v1/suppliers.php/${id}`, {
         method: 'DELETE'
       })
       const data = await response.json()

@@ -175,7 +175,7 @@ const formData = ref({
 // Fetch products from API
 const fetchProducts = async () => {
   try {
-    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/products.php')
+    const response = await fetch('/api/v1/products.php')
     const data = await response.json()
     if (data.success) {
       products.value = data.data
@@ -221,7 +221,7 @@ const saveProduct = async () => {
   try {
     if (showEditModal.value) {
       // Update product
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/products.php/${formData.value.id}`, {
+      const response = await fetch(`/api/v1/products.php/${formData.value.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -233,7 +233,7 @@ const saveProduct = async () => {
       }
     } else {
       // Create new product
-      const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/products.php', {
+      const response = await fetch('/api/v1/products.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -261,7 +261,7 @@ const saveProduct = async () => {
 const deleteProduct = async (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
     try {
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/products.php/${id}`, {
+      const response = await fetch(`/api/v1/products.php/${id}`, {
         method: 'DELETE'
       })
       const data = await response.json()

@@ -255,7 +255,7 @@ const total = computed(() => subtotal.value + tax.value)
 // Methods
 const fetchProducts = async () => {
   try {
-    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/products.php')
+    const response = await fetch('/api/v1/products.php')
     const data = await response.json()
     if (data.success) {
       products.value = data.data
@@ -280,7 +280,7 @@ const fetchProducts = async () => {
 
 const fetchCustomers = async () => {
   try {
-    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/customers.php')
+    const response = await fetch('/api/v1/customers.php')
     const data = await response.json()
     if (data.success) {
       customers.value = data.data
@@ -376,7 +376,7 @@ const processTransaction = async () => {
     
     // Try to send to API
     try {
-      const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/sales.php', {
+      const response = await fetch('/api/v1/sales.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(saleData)

@@ -165,7 +165,7 @@ const formData = ref({
 // Fetch customers from API
 const fetchCustomers = async () => {
   try {
-    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/customers.php')
+    const response = await fetch('/api/v1/customers.php')
     const data = await response.json()
     if (data.success) {
       customers.value = data.data
@@ -220,7 +220,7 @@ const saveCustomer = async () => {
   try {
     if (showEditModal.value) {
       // Update customer
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/customers.php/${formData.value.id}`, {
+      const response = await fetch(`/api/v1/customers.php/${formData.value.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -232,7 +232,7 @@ const saveCustomer = async () => {
       }
     } else {
       // Create new customer
-      const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api/v1/customers.php', {
+      const response = await fetch('/api/v1/customers.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData.value)
@@ -260,7 +260,7 @@ const saveCustomer = async () => {
 const deleteCustomer = async (id) => {
   if (confirm('Are you sure you want to delete this customer?')) {
     try {
-      const response = await fetch(`https://jubilant-prosperity-production.up.railway.app/api/v1/customers.php/${id}`, {
+      const response = await fetch(`/api/v1/customers.php/${id}`, {
         method: 'DELETE'
       })
       const data = await response.json()
