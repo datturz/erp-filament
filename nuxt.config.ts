@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  ssr: true,
+  ssr: false,
   
   modules: [
     '@nuxt/ui',
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
   
   // Nitro config for Vercel deployment
   nitro: {
-    preset: 'vercel-edge'
+    preset: 'static'
   },
 
   // CSS Framework

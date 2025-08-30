@@ -1,11 +1,11 @@
 {
-  "buildCommand": "npm install && npm run build",
+  "buildCommand": "npm install && npm run generate",
   "outputDirectory": ".output/public",
-  "framework": "nuxtjs",
+  "framework": null,
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ]
 }
