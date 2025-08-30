@@ -69,6 +69,29 @@ if [ -n "$MYSQLHOST" ] && [ -n "$MYSQLDATABASE" ]; then
     php artisan db:seed --class=RoleAndPermissionSeeder --force 2>&1 || echo "Seeding skipped"
 fi
 
-# Start PHP server
+# Create simple router for PHP built-in server
+cat > public/router.php << 'EOF'
+<?php
+// Router for PHP built-in server
+$uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+// Handle API routes
+if (strpos($uri, '/api.php') === 0 || strpos($uri, '/api/') === 0) {
+    $_SERVER['SCRIPT_NAME'] = '/api.php';
+    require __DIR__ . '/api.php';
+    return true;
+}
+
+// Serve existing files directly
+if ($uri !== '/' && file_exists(__DIR__ . $uri)) {
+    return false; // Let PHP serve the file
+}
+
+// Everything else goes to index.php
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+require __DIR__ . '/index.php';
+EOF
+
+# Start PHP server with router
 echo "Starting PHP server on port ${PORT:-8080}..."
-exec php -S 0.0.0.0:${PORT:-8080} -t public
+exec php -S 0.0.0.0:${PORT:-8080} -t public public/router.php
