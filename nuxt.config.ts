@@ -59,6 +59,28 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static'
   },
+  
+  // Generate all routes
+  generate: {
+    routes: [
+      '/',
+      '/dashboard',
+      '/pos',
+      '/products',
+      '/categories',
+      '/customers',
+      '/suppliers',
+      '/inventory',
+      '/income',
+      '/expenses',
+      '/sales',
+      '/batches',
+      '/incoming',
+      '/outgoing',
+      '/transfers',
+      '/cycle-count'
+    ]
+  },
 
   // CSS Framework
   css: ['~/assets/css/main.css'],
