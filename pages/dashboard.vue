@@ -155,7 +155,8 @@
               </div>
               <div class="ml-3">
                 <p class="text-sm text-gray-500">Total Sales</p>
-                <p class="text-lg font-semibold">$12,450</p>
+                <p class="text-lg font-semibold" v-if="!isLoading">${{ totalSales.toLocaleString() }}</p>
+                <p class="text-lg font-semibold" v-else>Loading...</p>
               </div>
             </div>
           </div>
@@ -169,7 +170,8 @@
               </div>
               <div class="ml-3">
                 <p class="text-sm text-gray-500">Inventory</p>
-                <p class="text-lg font-semibold">2,345</p>
+                <p class="text-lg font-semibold" v-if="!isLoading">{{ inventoryCount.toLocaleString() }}</p>
+                <p class="text-lg font-semibold" v-else>Loading...</p>
               </div>
             </div>
           </div>
@@ -183,7 +185,8 @@
               </div>
               <div class="ml-3">
                 <p class="text-sm text-gray-500">Production</p>
-                <p class="text-lg font-semibold">145</p>
+                <p class="text-lg font-semibold" v-if="!isLoading">{{ productionCount }}</p>
+                <p class="text-lg font-semibold" v-else>Loading...</p>
               </div>
             </div>
           </div>
@@ -197,7 +200,8 @@
               </div>
               <div class="ml-3">
                 <p class="text-sm text-gray-500">Staff</p>
-                <p class="text-lg font-semibold">24</p>
+                <p class="text-lg font-semibold" v-if="!isLoading">{{ staffCount }}</p>
+                <p class="text-lg font-semibold" v-else>Loading...</p>
               </div>
             </div>
           </div>
@@ -211,7 +215,7 @@
               <NuxtLink to="/pos" class="block px-4 py-3 bg-blue-600 text-white text-center rounded hover:bg-blue-700">
                 Start New Sale
               </NuxtLink>
-              <NuxtLink to="/sales" class="block px-4 py-3 border border-gray-300 text-center rounded hover:bg-gray-50">
+              <NuxtLink to="/sales-report" class="block px-4 py-3 border border-gray-300 text-center rounded hover:bg-gray-50">
                 View Sales Report
               </NuxtLink>
             </div>
@@ -220,7 +224,7 @@
           <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-lg font-semibold mb-4">Warehouse Operations</h2>
             <div class="grid grid-cols-2 gap-3">
-              <NuxtLink to="/inventory" class="px-4 py-3 border border-gray-300 text-center rounded hover:bg-gray-50">
+              <NuxtLink to="/stock-management" class="px-4 py-3 border border-gray-300 text-center rounded hover:bg-gray-50">
                 Inventory
               </NuxtLink>
               <NuxtLink to="/batches" class="px-4 py-3 border border-gray-300 text-center rounded hover:bg-gray-50">
@@ -241,10 +245,67 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const sidebarOpen = ref(false)
 const selectedStore = ref('all')
+
+// Dashboard metrics - akan diupdate dari API
+const totalSales = ref(0)
+const inventoryCount = ref(0)
+const productionCount = ref(0)
+const staffCount = ref(0)
+
+// Loading state
+const isLoading = ref(true)
+
+// Fetch dashboard data dari Railway backend
+const fetchDashboardData = async () => {
+  try {
+    isLoading.value = true
+    
+    // Fetch dari Railway backend
+    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api.php/v1/dashboard', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      
+      // Update metrics dari backend
+      totalSales.value = data.totalSales || 0
+      inventoryCount.value = data.inventoryCount || 0
+      productionCount.value = data.productionCount || 0
+      staffCount.value = data.staffCount || 0
+    } else {
+      // Jika API gagal, gunakan data default
+      console.log('Using default data - API not available')
+      totalSales.value = 12450
+      inventoryCount.value = 2345
+      productionCount.value = 145
+      staffCount.value = 24
+    }
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error)
+    // Fallback ke data default
+    totalSales.value = 12450
+    inventoryCount.value = 2345
+    productionCount.value = 145
+    staffCount.value = 24
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchDashboardData()
+  
+  // Refresh data setiap 30 detik untuk realtime
+  setInterval(fetchDashboardData, 30000)
+})
 
 const handleLogout = () => {
   document.cookie = 'auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'

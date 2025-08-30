@@ -381,7 +381,35 @@ const saveTransfer = () => {
   }
 }
 
+// Fetch stock data dari backend
+const fetchStockData = async () => {
+  try {
+    const response = await fetch('https://jubilant-prosperity-production.up.railway.app/api.php/v1/inventory', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      stockItems.value = data.items || stockItems.value
+      
+      // Update metrics
+      totalStock.value = data.totalStock || stockItems.value.reduce((sum, item) => sum + item.stockLevel, 0)
+      lowStockItems.value = data.lowStockCount || stockItems.value.filter(item => item.stockLevel < item.minStock).length
+      outOfStock.value = data.outOfStockCount || stockItems.value.filter(item => item.stockLevel === 0).length
+      stockValue.value = data.stockValue || stockItems.value.reduce((sum, item) => sum + (item.stockLevel * item.price), 0)
+    }
+  } catch (error) {
+    console.error('Error fetching stock data:', error)
+    // Keep default data if API fails
+  }
+}
+
 onMounted(() => {
-  // Fetch stock data
+  fetchStockData()
+  // Refresh setiap 30 detik
+  setInterval(fetchStockData, 30000)
 })
 </script>
