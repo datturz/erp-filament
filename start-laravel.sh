@@ -25,10 +25,15 @@ mkdir -p storage/app/public \
 # Ensure Laravel can write to storage
 chmod -R 777 storage bootstrap/cache
 
+# Clear any cached config/routes
+echo "Clearing Laravel caches..."
+php artisan config:clear 2>&1 || echo "Config clear skipped"
+php artisan route:clear 2>&1 || echo "Route clear skipped"
+php artisan view:clear 2>&1 || echo "View clear skipped"
+
 # Run composer scripts that were skipped during build
 echo "Running post-install scripts..."
 php artisan package:discover --ansi 2>&1 || echo "Package discovery completed or skipped"
-php artisan config:clear 2>&1 || echo "Config clear skipped"
 
 # Check if vendor directory exists
 if [ ! -d "vendor" ]; then
