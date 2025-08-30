@@ -65,8 +65,11 @@ if [ -n "$MYSQLHOST" ] && [ -n "$MYSQLDATABASE" ]; then
     echo "Running database migrations..."
     php artisan migrate --force 2>&1 || echo "Migration skipped or already done"
     
-    # Create default admin user if not exists
-    php artisan db:seed --class=RoleAndPermissionSeeder --force 2>&1 || echo "Seeding skipped"
+    # Create roles and permissions
+    php artisan db:seed --class=RoleAndPermissionSeeder --force 2>&1 || echo "Role seeding skipped"
+    
+    # Create default users
+    php artisan db:seed --class=DefaultUserSeeder --force 2>&1 || echo "User seeding skipped"
 fi
 
 # Create simple router for PHP built-in server

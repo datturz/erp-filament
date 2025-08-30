@@ -26,6 +26,12 @@ $requestPath = str_replace('/api.php', '', $requestPath);
 
 // Route to endpoints
 switch ($requestPath) {
+    case '/v1/auth/login':
+    case '/api/v1/auth/login':
+        // Forward to login handler
+        require __DIR__ . '/api/v1/auth/login.php';
+        exit;
+        
     case '/v1/test':
     case '/api/v1/test':
         $response = [
