@@ -22,8 +22,8 @@ WORKDIR /var/www
 # Copy composer files first for better caching
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist --no-autoloader
+# Install PHP dependencies (skip scripts to avoid errors during build)
+RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
 
 # Copy application files
 COPY . .
@@ -31,8 +31,8 @@ COPY . .
 # Copy Railway environment file
 RUN if [ -f .env.railway ]; then cp .env.railway .env; else echo "Warning: .env.railway not found"; fi
 
-# Complete composer installation with autoloader
-RUN composer dump-autoload --optimize --no-dev
+# Complete composer installation with autoloader (skip scripts to avoid artisan errors)
+RUN composer dump-autoload --optimize --no-dev --no-scripts
 
 # Create required directories and set permissions
 RUN mkdir -p storage/app/public \

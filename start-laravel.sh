@@ -16,6 +16,11 @@ fi
 # Ensure Laravel can write to storage
 chmod -R 777 storage bootstrap/cache
 
+# Run composer scripts that were skipped during build
+echo "Running post-install scripts..."
+php artisan package:discover --ansi 2>&1 || echo "Package discovery completed or skipped"
+php artisan config:clear 2>&1 || echo "Config clear skipped"
+
 # Check if vendor directory exists
 if [ ! -d "vendor" ]; then
     echo "ERROR: vendor directory not found! Composer install may have failed."
