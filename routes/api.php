@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\MobileController;
+use App\Http\Controllers\Api\V1\ERPController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,30 @@ Route::get('/v1/test', function () {
         'message' => 'API connection successful',
         'timestamp' => now()->toDateTimeString(),
         'server' => 'Railway Laravel API',
-        'version' => 'v1'
+        'version' => 'v1',
+        'cors_enabled' => true,
+        'endpoints' => [
+            'test' => '/api.php/v1/test',
+            'health' => '/api.php/v1/health',
+            'auth' => '/api.php/v1/auth/login',
+            'products' => '/api.php/v1/products'
+        ]
     ]);
+});
+
+// Public endpoints (no auth for development/testing)
+Route::prefix('v1')->group(function () {
+    // ERP endpoints using controller
+    Route::get('/dashboard', [ERPController::class, 'dashboard']);
+    Route::get('/products', [ERPController::class, 'products']);
+    Route::post('/products', [ERPController::class, 'storeProduct']);
+    Route::put('/products/{id}', [ERPController::class, 'updateProduct']);
+    Route::delete('/products/{id}', [ERPController::class, 'deleteProduct']);
+    Route::get('/categories', [ERPController::class, 'categories']);
+    Route::get('/inventory', [ERPController::class, 'inventory']);
+    Route::get('/sales', [ERPController::class, 'sales']);
+    Route::post('/sales', [ERPController::class, 'processSale']);
+    
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
